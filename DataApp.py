@@ -11,10 +11,15 @@ icon = PhotoImage(file="PythonLogo.png")
 window.iconphoto(True, icon)
 name_var=tk.StringVar()
 
-def submit():
-    name = name_var.get()
+class character:
+    def __init__(self):
+        self.name = ""
+        self.characterStats = {"strength": 0, "Intelligence": 0, "Constitution": 0, "Dexterity": 0, "Wisdom": 0, "Charisma": 0}
 
-character ={"name" : " ", "strength": 0 ,"Intelligence": 0, "Constitution": 0, "Dexterity":0, "Wisdom": 0, "Charisma": 0}
+
+
+char = character()
+characterParty = []
 
 left_frame = Frame(window, width = 200, height = 400, bg = "grey")
 left_frame.grid(row = 0, column = 0,padx = 10, pady = 5)
@@ -48,12 +53,17 @@ dex_text = Label(stats_screen, text = "Dexterity:").grid(row = 4, column = 1, pa
 wisdom_text = Label(stats_screen, text = "Wisdom:").grid(row = 5, column = 1, padx = 5, pady =3)
 char_text = Label(stats_screen, text = "Charisma").grid(row = 6, column = 1, padx = 5, pady = 3)
 
-Label(char_slot_1, text = "char1").grid(row = 0, column =1, padx = 5, pady =5)
-Label(char_slot_2, text = "char2").grid(row = 0, column =1, padx = 5, pady =5)
-Label(char_slot_3, text = "char3").grid(row = 0, column =1, padx = 5, pady =5)
-Label(char_slot_4, text = "char4").grid(row = 0, column =1, padx = 5, pady =5)
+char1Label = Label(char_slot_1, text = "char1")
+char1Label.grid(row = 0, column =1, padx = 5, pady =5)
+char2Label = Label(char_slot_2, text = "char2")
+char2Label.grid(row = 0, column =1, padx = 5, pady =5)
+char3Label = Label(char_slot_3, text = "char3")
+char3Label.grid(row = 0, column =1, padx = 5, pady =5)
+char4Label = Label(char_slot_4, text = "char4")
+char4Label.grid(row = 0, column =1, padx = 5, pady =5)
 
-name_entry = tk.Entry(stats_screen,textvariable = name_var).grid(row = 0, column = 2, padx =5, pady =3)
+name_entry = tk.Entry(stats_screen,textvariable = name_var)
+name_entry.grid(row = 0, column = 2, padx =5, pady =3)
 strength_result_text = Label(stats_screen, text = "0")
 strength_result_text.grid(row = 1, column = 2, padx = 5, pady = 3)
 int_result_text = Label(stats_screen, text = "0")
@@ -68,38 +78,44 @@ char_result_text = Label(stats_screen, text = "0")
 char_result_text.grid(row = 6, column = 2, padx = 5, pady = 3)
 
 def roll_stats():
-    character["strength"] = random.randint(0, 5)
-    strength_result_text.config(text = character["strength"])
+    char.characterStats["strength"] = random.randint(0,5)
+    strength_result_text.config(text = char.characterStats["strength"])
 
-    character["Intelligence"] = random.randint(0, 5)
-    int_result_text.config(text=character["Intelligence"])
+    char.characterStats["Intelligence"] = random.randint(0,5)
+    int_result_text.config(text=char.characterStats["Intelligence"])
 
-    character["Constitution"] = random.randint(0, 5)
-    const_result_text.config(text=character["Constitution"])
+    char.characterStats["Constitution"] = random.randint(0, 5)
+    const_result_text.config(text=char.characterStats["Constitution"])
 
-    character["Dexterity"] = random.randint(0, 5)
-    dex_result_text.config(text=character["Dexterity"])
+    char.characterStats["Dexterity"] = random.randint(0, 5)
+    dex_result_text.config(text=char.characterStats["Dexterity"])
 
-    character["Wisdom"] = random.randint(0, 5)
-    wisdom_result_text.config(text=character["Wisdom"])
+    char.characterStats["Wisdom"] = random.randint(0, 5)
+    wisdom_result_text.config(text=char.characterStats["Wisdom"])
 
-    character["Charisma"] = random.randint(0, 5)
-    char_result_text.config(text=character["Charisma"])
+    char.characterStats["Charisma"] = random.randint(0, 5)
+    char_result_text.config(text=char.characterStats["Charisma"])
 
+def submit():
+    char.name = name_var.get()
 def save():
     if (name_entry == ""):
         print("please enter a name")
     else:
-        Label(char_slot_1, text="char1").grid(row=0, column=1, padx=5, pady=5)
+        submit()
+        char1Label.config(text = char.name)
+
+
+
+
+        #add a loop to the save function to check for if a party slot is already full, if so then use second char slot, etc
+        #if all slots are full, print out a message saying all slots are full
+        #add a reset button that lets the player choose which party slot to reset
+
 
 
 
 
 Button(window, text = "Roll Stats", command= roll_stats).grid(row=1, column = 1)
 Button(window, text = "Save", command = save).grid(row=1, column = 2)
-
-
-
-
-
 window.mainloop()
