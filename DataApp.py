@@ -5,7 +5,7 @@ import random
 windll.shcore.SetProcessDpiAwareness(1)
 window = tk.Tk()
 frame = Frame(window)
-window.title("Python Data App")
+window.title("CharacterStatsApp")
 window.geometry("800x500")
 icon = PhotoImage(file="PythonLogo.png")
 window.iconphoto(True, icon)
@@ -99,23 +99,12 @@ def roll_stats():
 def submit():
     char.name = name_var.get()
 def save():
-    if (name_entry == ""):
+    if (name_entry.get() ==0):
         print("please enter a name")
     else:
         submit()
         char1Label.config(text = char.name)
-
-
-
-
-        #add a loop to the save function to check for if a party slot is already full, if so then use second char slot, etc
-        #if all slots are full, print out a message saying all slots are full
-        #add a reset button that lets the player choose which party slot to reset
-
-
-
-
-
+        characterParty.append(char)
 Button(window, text = "Roll Stats", command= roll_stats).grid(row=1, column = 1)
 Button(window, text = "Save", command = save).grid(row=1, column = 2)
 window.mainloop()
